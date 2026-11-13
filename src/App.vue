@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import MovieItem from "./components/MovieItem.vue";
 
 const searchMovie = ref("");
 const watchlist = ref([]);
@@ -53,33 +54,29 @@ function removeFromWatched(movie) {
     <h1>Movie Watchlist</h1>
 
     <input v-model="searchMovie" type="text" placeholder="Search for a movie" />
-
     <ul>
-      <li v-for="movie in searchResults" :key="movie.id">
-        {{ movie.title }}
+      <MovieItem v-for="movie in searchResults" :key="movie.id" :movie="movie">
         <button @click="addToWatchlist(movie)">Add to watchlist</button>
         <button @click="markAsWatched(movie)">Mark as watched</button>
-      </li>
+      </MovieItem>
     </ul>
 
     <p v-if="searchResults.length === 0">No movies found!</p>
 
     <h2>Watchlist</h2>
     <ul>
-      <li v-for="movie in watchlist" :key="movie.id">
-        {{ movie.title }}
+      <MovieItem v-for="movie in watchlist" :key="movie.id" :movie="movie">
         <button @click="markAsWatched(movie)">Mark as watched</button>
         <button @click="removeFromWatchlist(movie)">Remove</button>
-      </li>
+      </MovieItem>
     </ul>
     <p v-if="watchlist.length === 0">Your watchlist is empty!</p>
 
     <h2>Watched</h2>
     <ul>
-      <li v-for="movie in watched" :key="movie.id">
-        {{ movie.title }}
+      <MovieItem v-for="movie in watched" :key="movie.id" :movie="movie">
         <button @click="removeFromWatched(movie)">Remove</button>
-      </li>
+      </MovieItem>
     </ul>
     <p v-if="watched.length === 0">Your watchedlist is empty!</p>
   </main>
