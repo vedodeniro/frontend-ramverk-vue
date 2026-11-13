@@ -6,7 +6,9 @@ defineProps({
 
 <template>
   <li>
-    {{ movie.title }}
+    <img v-if="movie.poster" :src="movie.poster" :alt="movie.title" width="100" />
+    <div v-else>No poster</div>
+    <p>{{ movie.title }}</p>
     <slot></slot>
   </li>
 </template>

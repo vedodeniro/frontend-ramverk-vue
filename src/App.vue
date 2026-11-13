@@ -1,29 +1,36 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import MovieItem from "./components/MovieItem.vue";
 
+const apiKey = import.meta.env.VITE_OMDB_KEY;
+
 const searchMovie = ref("");
+const searchResults = ref([]);
+const hasSearched = ref(false);
 const watchlist = ref([]);
 const watched = ref([]);
 
-const movies = ref([
-  { id: 1, title: "Fight Club" },
-  { id: 2, title: "Forrest Gump" },
-  { id: 3, title: "Inception" },
-  { id: 4, title: "Interstellar" },
-  { id: 5, title: "Gladiator" },
-  { id: 6, title: "Pulp Fiction" },
-  { id: 7, title: "The Dark Knight" },
-  { id: 8, title: "The Godfather" },
-  { id: 9, title: "The Matrix" },
-  { id: 10, title: "Jurassic Park" },
-]);
+async function searchMovies() {
+  if (searchMovie.value.trim() === "") {
+    return;
+  }
 
-const searchResults = computed(() => {
-  return movies.value.filter((movie) =>
-    movie.title.toLowerCase().includes(searchMovie.value.toLowerCase()),
+  const response = await fetch(
+    `https://www.omdbapi.com/?s=${encodeURIComponent(searchMovie.value)}&apikey=${apiKey}`,
   );
-});
+  const data = await response.json();
+  hasSearched.value = true;
+
+  if (data.Response === "True") {
+    searchResults.value = data.Search.map((item) => ({
+      id: item.imdbID,
+      title: item.Title,
+      poster: item.Poster === "N/A" ? "" : item.Poster,
+    }));
+  } else {
+    searchResults.value = [];
+  }
+}
 
 function addToWatchlist(movie) {
   const alreadyInList = watchlist.value.some((item) => item.id === movie.id);
@@ -53,7 +60,14 @@ function removeFromWatched(movie) {
   <main>
     <h1>Movie Watchlist</h1>
 
-    <input v-model="searchMovie" type="text" placeholder="Search for a movie" />
+    <input
+      v-model="searchMovie"
+      type="text"
+      placeholder="Search for a movie"
+      @keyup.enter="searchMovies"
+    />
+    <button @click="searchMovies">Search</button>
+
     <ul>
       <MovieItem v-for="movie in searchResults" :key="movie.id" :movie="movie">
         <button @click="addToWatchlist(movie)">Add to watchlist</button>
@@ -61,7 +75,7 @@ function removeFromWatched(movie) {
       </MovieItem>
     </ul>
 
-    <p v-if="searchResults.length === 0">No movies found!</p>
+    <p v-if="hasSearched && searchResults.length === 0">No movies found!</p>
 
     <h2>Watchlist</h2>
     <ul>
