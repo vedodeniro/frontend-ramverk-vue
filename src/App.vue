@@ -95,3 +95,112 @@ function removeFromWatched(movie) {
     <p v-if="watched.length === 0">Your watchedlist is empty!</p>
   </main>
 </template>
+
+<style>
+body {
+  margin: 0;
+  background: #0a1a3a;
+  color: #e8edf7;
+  font-family: sans-serif;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+h1 {
+  text-align: center;
+  color: #2dd4bf;
+  font-size: 40px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  color: #2dd4bf;
+  margin-top: 32px;
+}
+
+input {
+  padding: 10px 14px;
+  width: 260px;
+  margin-right: 12px;
+  background: #16295a;
+  color: #ffffff;
+  border: 2px solid #2dd4bf;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #8fa3cf;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ffffff;
+}
+
+button {
+  padding: 8px 12px;
+  background: #2dd4bf;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #7ee8da;
+}
+
+ul {
+  list-style: none;
+  padding: 0 0 12px 0;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-color: #2dd4bf #1c3166;
+}
+
+li {
+  flex: 0 0 140px;
+  box-sizing: border-box;
+  text-align: center;
+  background: #e8edf7;
+  color: #000000;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+li img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 380 / 562;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+li div {
+  width: 100%;
+  aspect-ratio: 380 / 562;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c9d3ea;
+  border-radius: 8px;
+}
+
+li p {
+  height: 42px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+li button {
+  margin: 4px 2px;
+}
+</style>
