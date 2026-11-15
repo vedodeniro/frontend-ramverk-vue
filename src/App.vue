@@ -97,6 +97,11 @@ function removeFromWatched(movie) {
 </template>
 
 <style>
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: #0a1a3a;
@@ -202,5 +207,12 @@ li p {
 
 li button {
   margin: 4px 2px;
+}
+
+@media (max-width: 480px) {
+  input {
+    width: 60%;
+    margin-right: 8px;
+  }
 }
 </style>
